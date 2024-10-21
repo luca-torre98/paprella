@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paperella Game</title>
 
-    <!-- Aggiunta Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
         body {
             margin: 0;
@@ -16,61 +13,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('nuvola.jpg'), url('ape.png'), url('ape.png'); /* Sfondo nuvola e api */
-            background-size: cover, 50px, 50px; /* Dimensione api */
-            background-repeat: no-repeat; /* Non ripete la nuvola */
-            background-position: center, 10% 20%, 80% 50%; /* Posiziona le api */
+            background-image: url('papera/nuvola.jpg'); /* Sfondo aggiornato */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             font-family: 'Fredoka', sans-serif;
             flex-direction: column;
-        }
-
-        /* Responsività per schermi più piccoli */
-        @media (max-width: 600px) {
-            #play-area {
-                width: 90vw;
-                height: 60vh;
-            }
-
-            h1 {
-                font-size: 32px;
-            }
-
-            p {
-                font-size: 18px;
-            }
-
-            #random-image {
-                width: 200px; /* Ridimensionamento per dispositivi mobili */
-            }
-
-            #win-message {
-                font-size: 24px;
-            }
-        }
-
-        /* Sfondo rettangolare dietro al titolo */
-        #title-background {
-            background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Leggera ombra */
-            margin-bottom: 20px;
-        }
-
-        /* Titolo "Paperella Game" */
-        h1 {
-            font-size: 48px;
-            color: #004080; /* Azzurro scuro */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Aggiunta ombra più intensa */
-            margin: 0;
-        }
-
-        /* Testo aggiunto */
-        p {
-            font-size: 24px;
-            color: #004080; /* Azzurro scuro per il testo */
-            margin: 0;
         }
 
         #play-area {
@@ -78,7 +26,7 @@
             width: 80vw;
             height: 75vh;
             overflow: hidden;
-            border: 10px solid #FFD700; /* Cornice oro */
+            border: 10px solid #FFD700;
             box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
             background-color: #ffffff;
@@ -88,7 +36,7 @@
             width: 100px;
             height: 100px;
             position: absolute;
-            background-image: url('papera.jfif'); /* Verifica che il percorso sia corretto */
+            background-image: url('papera/papera.jfif'); /* Immagine della papera */
             background-size: contain;
             background-repeat: no-repeat;
         }
@@ -126,10 +74,8 @@
 </head>
 <body>
 
-<div id="title-background">
-    <h1>Paperella Game</h1>
-    <p>Clicca la paperella e scopri il segreto!</p>
-</div>
+<h1>Paperella Game</h1>
+<p>Clicca la paperella e scopri il segreto!</p>
 
 <div id="play-area">
     <div id="moving-object"></div>
@@ -138,29 +84,20 @@
 </div>
 
 <script>
-    // Selezione elementi
     const movingObject = document.getElementById('moving-object');
     const winMessage = document.getElementById('win-message');
     const randomImage = document.getElementById('random-image');
     const playArea = document.getElementById('play-area');
 
-    // Array di immagini nella cartella 'random'
     const images = [
-        'random/1.jpeg',
-        'random/2.jpeg',
-        'random/3.jpeg',
-        'random/4.jpeg',
-        'random/5.jpeg',
-        'random/6.jpeg',
-        'random/7.jpeg',
-        'random/8.jpeg',
-        'random/9.jpeg',
-        'random/10.jpeg',
-        'random/11.jpeg',
-        'random/12.jpeg'
+        'papera/random/1.jpeg',
+        'papera/random/2.jpeg',
+        'papera/random/3.jpeg',
+        'papera/random/4.jpeg',
+        'papera/random/5.jpeg',
+        // continua con gli altri file
     ];
 
-    // Funzione per muovere l'oggetto in una posizione casuale
     function moveObject() {
         const playAreaWidth = playArea.offsetWidth;
         const playAreaHeight = playArea.offsetHeight;
@@ -175,17 +112,14 @@
         movingObject.style.top = randomY + 'px';
     }
 
-    // Movimento continuo
     setInterval(moveObject, 1000);
 
-    // Funzione per mostrare immagine random
     function showRandomImage() {
         const randomIndex = Math.floor(Math.random() * images.length);
         randomImage.src = images[randomIndex];
         randomImage.style.display = 'block';
     }
 
-    // Mostra il messaggio di vittoria
     function showWinMessage() {
         showRandomImage();
         winMessage.style.display = 'block';
@@ -195,7 +129,6 @@
         }, 4000);
     }
 
-    // Evento click
     movingObject.addEventListener('click', function () {
         showWinMessage();
     });
