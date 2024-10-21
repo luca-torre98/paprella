@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperella Game</title>
+
+    <!-- Aggiunta Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('nuvola.jpg'), url('ape.png'), url('ape.png'); /* Sfondo nuvola e api */
+            background-size: cover, 50px, 50px; /* Dimensione api */
+            background-repeat: no-repeat; /* Non ripete la nuvola */
+            background-position: center, 10% 20%, 80% 50%; /* Posiziona le api */
+            font-family: 'Fredoka', sans-serif;
+            flex-direction: column;
+        }
+
+        /* Responsività per schermi più piccoli */
+        @media (max-width: 600px) {
+            #play-area {
+                width: 90vw;
+                height: 60vh;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            p {
+                font-size: 18px;
+            }
+
+            #random-image {
+                width: 200px; /* Ridimensionamento per dispositivi mobili */
+            }
+
+            #win-message {
+                font-size: 24px;
+            }
+        }
+
+        /* Sfondo rettangolare dietro al titolo */
+        #title-background {
+            background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Leggera ombra */
+            margin-bottom: 20px;
+        }
+
+        /* Titolo "Paperella Game" */
+        h1 {
+            font-size: 48px;
+            color: #004080; /* Azzurro scuro */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Aggiunta ombra più intensa */
+            margin: 0;
+        }
+
+        /* Testo aggiunto */
+        p {
+            font-size: 24px;
+            color: #004080; /* Azzurro scuro per il testo */
+            margin: 0;
+        }
+
+        #play-area {
+            position: relative;
+            width: 80vw;
+            height: 75vh;
+            overflow: hidden;
+            border: 10px solid #FFD700; /* Cornice oro */
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            background-color: #ffffff;
+        }
+
+        #moving-object {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-image: url('papera.jfif'); /* Verifica che il percorso sia corretto */
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #random-image {
+            display: none;
+            width: 300px;
+            height: auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 5px solid #FFD700;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #win-message {
+            display: none;
+            font-size: 36px;
+            font-family: 'Fredoka', sans-serif;
+            color: #004080;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 3px solid #FFD700;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div id="title-background">
+    <h1>Paperella Game</h1>
+    <p>Clicca la paperella e scopri il segreto!</p>
+</div>
+
+<div id="play-area">
+    <div id="moving-object"></div>
+    <img id="random-image" src="" alt="Immagine random" />
+    <div id="win-message">Hai vinto!</div>
+</div>
+
+<script>
+    // Selezione elementi
+    const movingObject = document.getElementById('moving-object');
+    const winMessage = document.getElementById('win-message');
+    const randomImage = document.getElementById('random-image');
+    const playArea = document.getElementById('play-area');
+
+    // Array di immagini nella cartella 'random'
+    const images = [
+        'random/1.jpeg',
+        'random/2.jpeg',
+        'random/3.jpeg',
+        'random/4.jpeg',
+        'random/5.jpeg',
+        'random/6.jpeg',
+        'random/7.jpeg',
+        'random/8.jpeg',
+        'random/9.jpeg',
+        'random/10.jpeg',
+        'random/11.jpeg',
+        'random/12.jpeg'
+    ];
+
+    // Funzione per muovere l'oggetto in una posizione casuale
+    function moveObject() {
+        const playAreaWidth = playArea.offsetWidth;
+        const playAreaHeight = playArea.offsetHeight;
+
+        const maxX = playAreaWidth - movingObject.offsetWidth;
+        const maxY = playAreaHeight - movingObject.offsetHeight;
+
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        movingObject.style.left = randomX + 'px';
+        movingObject.style.top = randomY + 'px';
+    }
+
+    // Movimento continuo
+    setInterval(moveObject, 1000);
+
+    // Funzione per mostrare immagine random
+    function showRandomImage() {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        randomImage.src = images[randomIndex];
+        randomImage.style.display = 'block';
+    }
+
+    // Mostra il messaggio di vittoria
+    function showWinMessage() {
+        showRandomImage();
+        winMessage.style.display = 'block';
+        setTimeout(function() {
+            randomImage.style.display = 'none';
+            winMessage.style.display = 'none';
+        }, 4000);
+    }
+
+    // Evento click
+    movingObject.addEventListener('click', function () {
+        showWinMessage();
+    });
+</script>
+
+</body>
+</html>
