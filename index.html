@@ -1,175 +1,150 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paperella Game</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paperella Game</title>
 
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('papera/nuvola.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            font-family: 'Fredoka', sans-serif;
-            flex-direction: column;
-        }
+<style>
+body {
+margin: 0;
+overflow: hidden;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background-image: url('papera/nuvola.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+font-family: 'Fredoka', sans-serif;
+flex-direction: column;
+}
 
-        #title-container {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
+#title-container {
+background-color: rgba(255, 255, 255, 0.7);
+padding: 20px;
+border-radius: 10px;
+text-align: center;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
-        h1 {
-            font-size: 52px;
-            color: #0044cc;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-        }
+h1 {
+font-size: 52px;
+color: #0044cc;
+text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+margin-bottom: 10px;
+}
 
-        p {
-            font-size: 28px;
-            color: #0066ff;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
+p {
+font-size: 28px;
+color: #0066ff;
+text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+margin-bottom: 20px;
+}
 
-        #play-area {
-            position: relative;
-            width: 80vw;
-            height: 75vh;
-            overflow: hidden;
-            border: 10px solid #FFD700;
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            background-color: #ffffff;
-            z-index: 1;
-        }
+#play-area {
+position: relative;
+width: 80vw;
+height: 75vh;
+overflow: hidden;
+border: 10px solid #FFD700;
+box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+border-radius: 15px;
+background-color: #ffffff;
+}
 
-        #moving-object, .losing-object {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
+#moving-object, .losing-object {
+width: 100px;
+height: 100px;
+position: absolute;
+background-size: contain;
+background-repeat: no-repeat;
+}
 
-        #moving-object {
-            background-image: url('papera/papera.jfif');
-        }
+#moving-object {
+background-image: url('papera/papera.jfif');
+}
 
-        .losing-object {
-            background-image: url('papera/muffa.jpg');
-            background-size: cover;
-        }
+.losing-object {
+background-image: url('papera/muffa.jpg');
+background-size: cover;
+}
 
-        #random-image, #lose-image {
-            display: none;
-            width: 300px;
-            height: auto;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 5px solid red;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
+#random-image, #lose-image {
+display: none;
+width: 300px;
+height: auto;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+border: 5px solid red;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
 
-        #win-message, #lose-message {
-            display: none;
-            font-size: 36px;
-            font-family: 'Fredoka', sans-serif;
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, 0);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 3px solid;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
+#win-message, #lose-message {
+display: none;
+font-size: 36px;
+font-family: 'Fredoka', sans-serif;
+position: fixed;
+top: 65%;
+left: 50%;
+transform: translate(-50%, 0);
+background-color: rgba(255, 255, 255, 0.9);
+padding: 10px 20px;
+border-radius: 10px;
+border: 3px solid;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-        #win-message {
-            color: #004080;
-            border-color: #FFD700;
-        }
+#win-message {
+color: #004080;
+border-color: #FFD700;
+}
 
-        #lose-message {
-            color: red;
-            border-color: red;
-        }
+#lose-message {
+color: red;
+border-color: red;
+}
 
         /* Tende */
         #curtains {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
             background: linear-gradient(to right, #8B0000 50%, #8B0000 50%);
             z-index: 10;
             transition: transform 2s ease-in-out;
+            transform: translateX(0);
         }
 
-        .curtain {
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to bottom, #b22222 10%, #8B0000 90%);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-        }
-
-        .left-curtain {
-            transform-origin: left center;
-            transition: transform 2s ease-in-out;
-        }
-
-        .right-curtain {
-            transform-origin: right center;
-            transition: transform 2s ease-in-out;
-        }
-
-        #curtains.open .left-curtain {
+        #curtains.open {
             transform: translateX(-100%);
         }
-
-        #curtains.open .right-curtain {
-            transform: translateX(100%);
-        }
-    </style>
+</style>
 </head>
 <body>
 
-<div id="curtains">
-    <div class="curtain left-curtain"></div>
-    <div class="curtain right-curtain"></div>
-</div>
+<div id="curtains"></div>
 
 <div id="title-container">
-    <h1>Paperella Game</h1>
-    <p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
+<h1>Paperella Game</h1>
+<p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
 </div>
 
 <div id="play-area">
-    <div id="moving-object"></div>
-    <div class="losing-object"></div>
-    <div class="losing-object"></div>
-    <div class="losing-object"></div>
-    <img id="random-image" src="" alt="Immagine random" />
-    <img id="lose-image" src="papera/perso/Hai perso.jpeg" alt="Hai perso!" />
-    <div id="win-message">Hai vinto!</div>
-    <div id="lose-message">Hai perso!</div>
+<div id="moving-object"></div>
+<div class="losing-object"></div>
+<div class="losing-object"></div>
+<div class="losing-object"></div>
+<img id="random-image" src="" alt="Immagine random" />
+<img id="lose-image" src="papera/perso/Hai perso.jpeg" alt="Hai perso!" />
+<div id="win-message">Hai vinto!</div>
+<div id="lose-message">Hai perso!</div>
 </div>
 
 <!-- Aggiunta audio -->
@@ -178,70 +153,92 @@
 <audio id="lose-sound" src="papera/sound/lose-sound.mp3"></audio>
 
 <script>
-    const movingObject = document.getElementById('moving-object');
-    const winMessage = document.getElementById('win-message');
-    const loseMessage = document.getElementById('lose-message');
-    const randomImage = document.getElementById('random-image');
-    const loseImage = document.getElementById('lose-image');
-    const playArea = document.getElementById('play-area');
-    const losingObjects = document.querySelectorAll('.losing-object');
+const movingObject = document.getElementById('moving-object');
+const winMessage = document.getElementById('win-message');
+const loseMessage = document.getElementById('lose-message');
+const randomImage = document.getElementById('random-image');
+const loseImage = document.getElementById('lose-image');
+const playArea = document.getElementById('play-area');
+const losingObjects = document.querySelectorAll('.losing-object');
     const curtains = document.getElementById('curtains');
 
-    // Suoni
-    const backgroundMusic = document.getElementById('background-music');
-    const winSound = document.getElementById('win-sound');
-    const loseSound = document.getElementById('lose-sound');
+// Suoni
+const backgroundMusic = document.getElementById('background-music');
+const winSound = document.getElementById('win-sound');
+const loseSound = document.getElementById('lose-sound');
 
-    // Volume della musica al 4%
-    backgroundMusic.volume = 0.04;
+// Immagini random
+const images = [
+'papera/random/1.jpeg',
+'papera/random/2.jpeg',
+'papera/random/3.jpeg',
+'papera/random/4.jpeg',
+'papera/random/5.jpeg',
+'papera/random/6.jpeg',
+'papera/random/7.jpeg',
+'papera/random/8.jpeg',
+'papera/random/9.jpeg',
+'papera/random/10.jpeg',
+'papera/random/11.jpeg',
+'papera/random/12.jpeg'
+];
 
-    function moveObject(element) {
-        const playAreaWidth = playArea.offsetWidth;
-        const playAreaHeight = playArea.offsetHeight;
+function moveObject(element) {
+const playAreaWidth = playArea.offsetWidth;
+const playAreaHeight = playArea.offsetHeight;
 
-        const maxX = playAreaWidth - element.offsetWidth;
-        const maxY = playAreaHeight - element.offsetHeight;
+const maxX = playAreaWidth - element.offsetWidth;
+const maxY = playAreaHeight - element.offsetHeight;
 
-        const randomX = Math.floor(Math.random() * maxX);
-        const randomY = Math.floor(Math.random() * maxY);
+const randomX = Math.floor(Math.random() * maxX);
+const randomY = Math.floor(Math.random() * maxY);
 
-        element.style.left = randomX + 'px';
-        element.style.top = randomY + 'px';
-    }
+element.style.left = randomX + 'px';
+element.style.top = randomY + 'px';
+}
 
-    setInterval(() => {
-        moveObject(movingObject);
-        losingObjects.forEach(obj => moveObject(obj));
-    }, 1000);
+setInterval(() => {
+moveObject(movingObject);
+losingObjects.forEach(obj => moveObject(obj));
+}, 1000);
 
-    function showWinMessage() {
-        winSound.play();
-        randomImage.style.display = 'block';
-        winMessage.style.display = 'block';
-        setTimeout(() => {
-            randomImage.style.display = 'none';
-            winMessage.style.display = 'none';
-        }, 4000);
-    }
+function showWinMessage() {
+winSound.play();
+const randomIndex = Math.floor(Math.random() * images.length);
+randomImage.src = images[randomIndex];
+randomImage.style.display = 'block';
+winMessage.style.display = 'block';
+setTimeout(() => {
+randomImage.style.display = 'none';
+winMessage.style.display = 'none';
+}, 4000);
+}
 
-    function showLoseMessage() {
-        loseSound.play();
-        loseImage.style.display = 'block';
-        loseMessage.style.display = 'block';
-        setTimeout(() => {
-            loseImage.style.display = 'none';
-            loseMessage.style.display = 'none';
-        }, 4000);
-    }
+function showLoseMessage() {
+loseSound.play();
+loseImage.style.display = 'block';
+loseMessage.style.display = 'block';
+setTimeout(() => {
+loseImage.style.display = 'none';
+loseMessage.style.display = 'none';
+}, 4000);
+}
 
-    movingObject.addEventListener('click', showWinMessage);
-    losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
+movingObject.addEventListener('click', showWinMessage);
+losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
-    // Avvio musica e apertura tende
-    document.body.addEventListener('click', () => {
-        backgroundMusic.play();
-        curtains.classList.add('open');
-    }, { once: true });
+    // Musica di sottofondo
+    // Musica di sottofondo e tende
+document.body.addEventListener('click', () => {
+        backgroundMusic.volume = 0.2; // Volume al 20%
+backgroundMusic.play();
+        backgroundMusic.volume = 0.5; // Regola il volume
+        curtains.classList.add('open'); // Apri le tende
+}, { once: true });
+
+backgroundMusic.addEventListener('error', () => {
+console.error('Errore durante il caricamento della musica di sottofondo.');
+});
 </script>
 
 </body>
