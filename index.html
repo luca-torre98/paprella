@@ -271,4 +271,15 @@ movingObject.addEventListener('click', showWinMessage);
 losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
 // Avvio musica e apertura tende
-document.body.addEvent
+document.body.addEventListener('click', () => {
+    backgroundMusic.volume = 0.04; // Volume al 4%
+    backgroundMusic.play();
+    curtains.classList.add('open'); // Apri le tende
+    setTimeout(() => {
+        welcomeMessage.style.display = 'none'; // Nascondi il messaggio
+    }, 2000);
+}, { once: true });
+</script>
+
+</body>
+</html>
