@@ -108,9 +108,28 @@
             color: red;
             border-color: red;
         }
+
+        /* Tende */
+        #curtains {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #8B0000 50%, #8B0000 50%);
+            z-index: 10;
+            transition: transform 2s ease-in-out;
+            transform: translateX(0);
+        }
+
+        #curtains.open {
+            transform: translateX(-100%);
+        }
     </style>
 </head>
 <body>
+
+<div id="curtains"></div>
 
 <div id="title-container">
     <h1>Paperella Game</h1>
@@ -141,6 +160,7 @@
     const loseImage = document.getElementById('lose-image');
     const playArea = document.getElementById('play-area');
     const losingObjects = document.querySelectorAll('.losing-object');
+    const curtains = document.getElementById('curtains');
 
     // Suoni
     const backgroundMusic = document.getElementById('background-music');
@@ -207,10 +227,11 @@
     movingObject.addEventListener('click', showWinMessage);
     losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
-    // Musica di sottofondo
+    // Musica di sottofondo e tende
     document.body.addEventListener('click', () => {
+        backgroundMusic.volume = 0.2; // Volume al 20%
         backgroundMusic.play();
-        backgroundMusic.volume = 0.5; // Regola il volume
+        curtains.classList.add('open'); // Apri le tende
     }, { once: true });
 
     backgroundMusic.addEventListener('error', () => {
