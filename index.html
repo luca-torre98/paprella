@@ -22,24 +22,24 @@
         }
 
         #title-container {
-            background-color: rgba(255, 255, 255, 0.7); /* Sfondo bianco semi-trasparente */
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Leggera ombra */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
             font-size: 52px;
-            color: #0044cc; /* Azzurro scuro vivace */
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); /* Ombra più morbida */
+            color: #0044cc;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 10px;
         }
 
         p {
             font-size: 28px;
-            color: #0066ff; /* Azzurro medio per dare contrasto */
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Ombra leggera per migliorare leggibilità */
+            color: #0066ff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
         }
 
@@ -128,6 +128,11 @@
     <div id="lose-message">Hai perso!</div>
 </div>
 
+<!-- Aggiunta audio -->
+<audio id="background-music" src="papera/sound/background-music.mp3" loop autoplay></audio>
+<audio id="win-sound" src="papera/sound/win-sound.mp3"></audio>
+<audio id="lose-sound" src="papera/sound/lose-sound.mp3"></audio>
+
 <script>
     const movingObject = document.getElementById('moving-object');
     const winMessage = document.getElementById('win-message');
@@ -137,6 +142,12 @@
     const playArea = document.getElementById('play-area');
     const losingObjects = document.querySelectorAll('.losing-object');
 
+    // Suoni
+    const backgroundMusic = document.getElementById('background-music');
+    const winSound = document.getElementById('win-sound');
+    const loseSound = document.getElementById('lose-sound');
+
+    // Immagini random
     const images = [
         'papera/random/1.jpeg',
         'papera/random/2.jpeg',
@@ -172,6 +183,7 @@
     }, 1000);
 
     function showWinMessage() {
+        winSound.play();
         const randomIndex = Math.floor(Math.random() * images.length);
         randomImage.src = images[randomIndex];
         randomImage.style.display = 'block';
@@ -183,6 +195,7 @@
     }
 
     function showLoseMessage() {
+        loseSound.play();
         loseImage.style.display = 'block';
         loseMessage.style.display = 'block';
         setTimeout(() => {
@@ -193,6 +206,10 @@
 
     movingObject.addEventListener('click', showWinMessage);
     losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
+
+    // Musica di sottofondo
+    backgroundMusic.volume = 0.5; // Regola il volume
+    backgroundMusic.play();
 </script>
 
 </body>
