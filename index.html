@@ -28,6 +28,7 @@
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             z-index: 2;
+            position: relative;
         }
 
         h1 {
@@ -53,6 +54,7 @@
             box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
             background-color: #ffffff;
+            z-index: 1;
         }
 
         #moving-object, .losing-object {
@@ -118,9 +120,9 @@
             width: 100%;
             height: 100%;
             display: flex;
-            background: radial-gradient(circle, #8B0000 20%, #600000 80%);
             z-index: 10;
             overflow: hidden;
+            background: radial-gradient(circle, #600000 20%, #400000 100%);
             transition: transform 2s ease-in-out;
         }
 
@@ -129,7 +131,6 @@
             height: 100%;
             background: linear-gradient(to bottom, #b22222 10%, #8B0000 90%);
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-            z-index: 10;
         }
 
         .left-curtain {
@@ -194,8 +195,8 @@
     const winSound = document.getElementById('win-sound');
     const loseSound = document.getElementById('lose-sound');
 
-    // Volume della musica al 10%
-    backgroundMusic.volume = 0.1;
+    // Volume della musica al 5%
+    backgroundMusic.volume = 0.05;
 
     function moveObject(element) {
         const playAreaWidth = playArea.offsetWidth;
@@ -218,8 +219,6 @@
 
     function showWinMessage() {
         winSound.play();
-        const randomIndex = Math.floor(Math.random() * images.length);
-        randomImage.src = images[randomIndex];
         randomImage.style.display = 'block';
         winMessage.style.display = 'block';
         setTimeout(() => {
