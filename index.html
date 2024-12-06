@@ -114,7 +114,7 @@
 
 <div id="title-container">
     <h1>Paperella Game</h1>
-    <p>Clicca la paperella per vincere, evita gli oggetti pericolosi!</p>
+    <p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
 </div>
 
 <div id="play-area">
@@ -129,7 +129,7 @@
 </div>
 
 <!-- Aggiunta audio -->
-<audio id="background-music" src="papera/sound/background-music.mp3" loop autoplay></audio>
+<audio id="background-music" src="papera/sound/background-music.mp3" loop></audio>
 <audio id="win-sound" src="papera/sound/win-sound.mp3"></audio>
 <audio id="lose-sound" src="papera/sound/lose-sound.mp3"></audio>
 
@@ -208,8 +208,14 @@
     losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
     // Musica di sottofondo
-    backgroundMusic.volume = 0.5; // Regola il volume
-    backgroundMusic.play();
+    document.body.addEventListener('click', () => {
+        backgroundMusic.play();
+        backgroundMusic.volume = 0.5; // Regola il volume
+    }, { once: true });
+
+    backgroundMusic.addEventListener('error', () => {
+        console.error('Errore durante il caricamento della musica di sottofondo.');
+    });
 </script>
 
 </body>
