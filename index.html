@@ -27,7 +27,6 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 2;
         }
 
         h1 {
@@ -53,7 +52,6 @@
             box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
             border-radius: 15px;
             background-color: #ffffff;
-            z-index: 1;
         }
 
         #moving-object, .losing-object {
@@ -111,7 +109,7 @@
             border-color: red;
         }
 
-        /* Tende migliorate */
+        /* Tende */
         #curtains {
             position: fixed;
             top: 0;
@@ -119,9 +117,8 @@
             width: 100%;
             height: 100%;
             display: flex;
-            background: linear-gradient(to right, #8B0000, #8B0000);
+            background: linear-gradient(to right, #8B0000 50%, #8B0000 50%);
             z-index: 10;
-            overflow: hidden;
             transition: transform 2s ease-in-out;
         }
 
@@ -130,7 +127,6 @@
             height: 100%;
             background: linear-gradient(to bottom, #b22222 10%, #8B0000 90%);
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-            z-index: 10;
         }
 
         .left-curtain {
@@ -195,8 +191,8 @@
     const winSound = document.getElementById('win-sound');
     const loseSound = document.getElementById('lose-sound');
 
-    // Volume della musica al 3%
-    backgroundMusic.volume = 0.03;
+    // Volume della musica al 4%
+    backgroundMusic.volume = 0.04;
 
     function moveObject(element) {
         const playAreaWidth = playArea.offsetWidth;
