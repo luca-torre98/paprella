@@ -109,7 +109,7 @@ p {
     border-color: red;
 }
 
-/* Tende con scritta */
+/* Tende */
 #curtains {
     position: absolute;
     top: 0;
@@ -200,6 +200,22 @@ const backgroundMusic = document.getElementById('background-music');
 const winSound = document.getElementById('win-sound');
 const loseSound = document.getElementById('lose-sound');
 
+// Immagini random
+const images = [
+    'papera/random/1.jpeg',
+    'papera/random/2.jpeg',
+    'papera/random/3.jpeg',
+    'papera/random/4.jpeg',
+    'papera/random/5.jpeg',
+    'papera/random/6.jpeg',
+    'papera/random/7.jpeg',
+    'papera/random/8.jpeg',
+    'papera/random/9.jpeg',
+    'papera/random/10.jpeg',
+    'papera/random/11.jpeg',
+    'papera/random/12.jpeg'
+];
+
 function moveObject(element) {
     const playAreaWidth = playArea.offsetWidth;
     const playAreaHeight = playArea.offsetHeight;
@@ -220,9 +236,21 @@ setInterval(() => {
 }, 1000);
 
 function showWinMessage() {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    const randomImagePath = images[randomIndex];
+    console.log(`Tentativo di caricare: ${randomImagePath}`); // Debug
+    randomImage.src = randomImagePath;
+
+    // Gestione errore immagine non trovata
+    randomImage.onerror = () => {
+        console.error(`Errore: impossibile caricare ${randomImagePath}`);
+        randomImage.style.display = 'none';
+    };
+
     winSound.play();
     randomImage.style.display = 'block';
     winMessage.style.display = 'block';
+
     setTimeout(() => {
         randomImage.style.display = 'none';
         winMessage.style.display = 'none';
@@ -243,15 +271,4 @@ movingObject.addEventListener('click', showWinMessage);
 losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
 // Avvio musica e apertura tende
-document.body.addEventListener('click', () => {
-    backgroundMusic.volume = 0.04; // Volume al 4%
-    backgroundMusic.play();
-    curtains.classList.add('open'); // Apri le tende
-    setTimeout(() => {
-        welcomeMessage.style.display = 'none'; // Nascondi il messaggio
-    }, 2000);
-}, { once: true });
-</script>
-
-</body>
-</html>
+document.body.addEvent
