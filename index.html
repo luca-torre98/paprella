@@ -27,6 +27,7 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
         }
 
         h1 {
@@ -109,27 +110,53 @@
             border-color: red;
         }
 
-        /* Tende */
+        /* Tende migliorate */
         #curtains {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, #8B0000 50%, #8B0000 50%);
+            display: flex;
+            background: radial-gradient(circle, #8B0000 20%, #600000 80%);
             z-index: 10;
+            overflow: hidden;
             transition: transform 2s ease-in-out;
-            transform: translateX(0);
         }
 
-        #curtains.open {
+        .curtain {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to bottom, #b22222 10%, #8B0000 90%);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+        }
+
+        .left-curtain {
+            transform-origin: left center;
+            transition: transform 2s ease-in-out;
+        }
+
+        .right-curtain {
+            transform-origin: right center;
+            transition: transform 2s ease-in-out;
+        }
+
+        #curtains.open .left-curtain {
             transform: translateX(-100%);
+        }
+
+        #curtains.open .right-curtain {
+            transform: translateX(100%);
         }
     </style>
 </head>
 <body>
 
-<div id="curtains"></div>
+<div id="curtains">
+    <div class="curtain left-curtain"></div>
+    <div class="curtain right-curtain"></div>
+</div>
 
 <div id="title-container">
     <h1>Paperella Game</h1>
@@ -167,21 +194,8 @@
     const winSound = document.getElementById('win-sound');
     const loseSound = document.getElementById('lose-sound');
 
-    // Immagini random
-    const images = [
-        'papera/random/1.jpeg',
-        'papera/random/2.jpeg',
-        'papera/random/3.jpeg',
-        'papera/random/4.jpeg',
-        'papera/random/5.jpeg',
-        'papera/random/6.jpeg',
-        'papera/random/7.jpeg',
-        'papera/random/8.jpeg',
-        'papera/random/9.jpeg',
-        'papera/random/10.jpeg',
-        'papera/random/11.jpeg',
-        'papera/random/12.jpeg'
-    ];
+    // Volume della musica al 10%
+    backgroundMusic.volume = 0.1;
 
     function moveObject(element) {
         const playAreaWidth = playArea.offsetWidth;
@@ -227,16 +241,11 @@
     movingObject.addEventListener('click', showWinMessage);
     losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
-    // Musica di sottofondo e tende
+    // Avvio musica e apertura tende
     document.body.addEventListener('click', () => {
-        backgroundMusic.volume = 0.2; // Volume al 20%
         backgroundMusic.play();
-        curtains.classList.add('open'); // Apri le tende
+        curtains.classList.add('open');
     }, { once: true });
-
-    backgroundMusic.addEventListener('error', () => {
-        console.error('Errore durante il caricamento della musica di sottofondo.');
-    });
 </script>
 
 </body>
