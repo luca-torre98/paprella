@@ -16,62 +16,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('nuvola.jpg'), url('ape.png'), url('ape.png'); /* Sfondo nuvola e api */
-            background-size: cover, 50px, 50px; /* Dimensione api */
-            background-repeat: no-repeat; /* Non ripete la nuvola */
-            background-position: center, 10% 20%, 80% 50%; /* Posiziona le api */
+            background-image: url('nuvola.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             font-family: 'Fredoka', sans-serif;
             flex-direction: column;
-        }
-
-        /* Responsività per schermi più piccoli */
-        @media (max-width: 600px) {
-            #play-area {
-                width: 90vw;
-                height: 60vh;
-            }
-
-            h1 {
-                font-size: 32px;
-            }
-
-            p {
-                font-size: 18px;
-            }
-
-            #random-image {
-                width: 200px; /* Ridimensionamento per dispositivi mobili */
-            }
-
-            #win-message,
-            #lose-message {
-                font-size: 24px;
-            }
-        }
-
-        /* Sfondo rettangolare dietro al titolo */
-        #title-background {
-            background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Leggera ombra */
-            margin-bottom: 20px;
-        }
-
-        /* Titolo "Paperella Game" */
-        h1 {
-            font-size: 48px;
-            color: #004080; /* Azzurro scuro */
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Aggiunta ombra più intensa */
-            margin: 0;
-        }
-
-        /* Testo aggiunto */
-        p {
-            font-size: 24px;
-            color: #004080; /* Azzurro scuro per il testo */
-            margin: 0;
         }
 
         #play-area {
@@ -79,13 +29,12 @@
             width: 80vw;
             height: 75vh;
             overflow: hidden;
-            border: 10px solid #FFD700; /* Cornice oro */
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+            border: 10px solid #FFD700;
             border-radius: 15px;
             background-color: #ffffff;
         }
 
-        #moving-object, .losing-object {
+        .moving-object, .losing-object {
             width: 100px;
             height: 100px;
             position: absolute;
@@ -94,24 +43,11 @@
         }
 
         #moving-object {
-            background-image: url('papera.jfif'); /* Verifica che il percorso sia corretto */
+            background-image: url('papera.jfif'); /* Paperella */
         }
 
         .losing-object {
-            background-image: url('muffajpg.jpg'); /* Immagine del "perdente" */
-        }
-
-        #random-image {
-            display: none;
-            width: 300px;
-            height: auto;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 5px solid #FFD700;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background-size: cover;
         }
 
         #win-message,
@@ -120,25 +56,24 @@
             font-size: 36px;
             font-family: 'Fredoka', sans-serif;
             position: fixed;
-            top: 65%;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, 0);
+            transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.9);
             padding: 10px 20px;
             border-radius: 10px;
-            border: 3px solid #FFD700;
+            border: 3px solid;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         #win-message {
             color: #004080;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            border-color: #FFD700;
         }
 
         #lose-message {
             color: red;
             border-color: red;
-            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.7);
         }
     </style>
 </head>
@@ -146,27 +81,26 @@
 
 <div id="title-background">
     <h1>Paperella Game</h1>
-    <p>Clicca la paperella e scopri il segreto!</p>
+    <p>Clicca la paperella per vincere, evita gli altri oggetti!</p>
 </div>
 
 <div id="play-area">
     <div id="moving-object"></div>
-    <div class="losing-object"></div>
-    <div class="losing-object"></div>
-    <img id="random-image" src="" alt="Immagine random" />
+    <div class="losing-object" style="background-image: url('random/download.jpg');"></div>
+    <div class="losing-object" style="background-image: url('random/download (1).jpg');"></div>
+    <div class="losing-object" style="background-image: url('random/download (2).jpg');"></div>
     <div id="win-message">Hai vinto!</div>
     <div id="lose-message">Hai perso!</div>
 </div>
 
 <script>
-    // Selezione elementi
     const movingObject = document.getElementById('moving-object');
     const winMessage = document.getElementById('win-message');
     const loseMessage = document.getElementById('lose-message');
     const losingObjects = document.querySelectorAll('.losing-object');
     const playArea = document.getElementById('play-area');
 
-    // Funzione per muovere l'oggetto in una posizione casuale
+    // Funzione per muovere un oggetto in una posizione casuale
     function moveObject(element) {
         const playAreaWidth = playArea.offsetWidth;
         const playAreaHeight = playArea.offsetHeight;
