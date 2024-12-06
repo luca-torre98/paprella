@@ -43,7 +43,7 @@
                 width: 200px; /* Ridimensionamento per dispositivi mobili */
             }
 
-            #win-message, #lose-message {
+            #win-message {
                 font-size: 24px;
             }
         }
@@ -84,20 +84,13 @@
             background-color: #ffffff;
         }
 
-        #moving-object, .losing-object {
+        #moving-object {
             width: 100px;
             height: 100px;
             position: absolute;
+            background-image: url('papera.jfif'); /* Verifica che il percorso sia corretto */
             background-size: contain;
             background-repeat: no-repeat;
-        }
-
-        #moving-object {
-            background-image: url('papera.jfif'); /* Verifica che il percorso sia corretto */
-        }
-
-        .losing-object {
-            background-size: cover;
         }
 
         #random-image {
@@ -129,87 +122,83 @@
             border: 3px solid #FFD700;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        #lose-message {
-            display: none;
-            font-size: 36px;
-            font-family: 'Fredoka', sans-serif;
-            color: red;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, 0);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 3px solid red;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
     </style>
 </head>
 <body>
 
 <div id="title-background">
     <h1>Paperella Game</h1>
-    <p>Clicca la paperella per vincere, evita gli altri oggetti!</p>
+    <p>Clicca la paperella e scopri il segreto!</p>
 </div>
 
 <div id="play-area">
     <div id="moving-object"></div>
-    <div class="losing-object" style="background-image: url('random/download.jpg');"></div>
-    <div class="losing-object" style="background-image: url('random/download (1).jpg');"></div>
-    <div class="losing-object" style="background-image: url('random/download (2).jpg');"></div>
     <img id="random-image" src="" alt="Immagine random" />
     <div id="win-message">Hai vinto!</div>
-    <div id="lose-message">Hai perso!</div>
 </div>
 
 <script>
+    // Selezione elementi
     const movingObject = document.getElementById('moving-object');
     const winMessage = document.getElementById('win-message');
-    const loseMessage = document.getElementById('lose-message');
-    const losingObjects = document.querySelectorAll('.losing-object');
+    const randomImage = document.getElementById('random-image');
     const playArea = document.getElementById('play-area');
 
-    // Funzione per muovere un oggetto in una posizione casuale
-    function moveObject(element) {
+    // Array di immagini nella cartella 'random'
+    const images = [
+        'random/1.jpeg',
+        'random/2.jpeg',
+        'random/3.jpeg',
+        'random/4.jpeg',
+        'random/5.jpeg',
+        'random/6.jpeg',
+        'random/7.jpeg',
+        'random/8.jpeg',
+        'random/9.jpeg',
+        'random/10.jpeg',
+        'random/11.jpeg',
+        'random/12.jpeg'
+    ];
+
+    // Funzione per muovere l'oggetto in una posizione casuale
+    function moveObject() {
         const playAreaWidth = playArea.offsetWidth;
         const playAreaHeight = playArea.offsetHeight;
 
-        const maxX = playAreaWidth - element.offsetWidth;
-        const maxY = playAreaHeight - element.offsetHeight;
+        const maxX = playAreaWidth - movingObject.offsetWidth;
+        const maxY = playAreaHeight - movingObject.offsetHeight;
 
         const randomX = Math.floor(Math.random() * maxX);
         const randomY = Math.floor(Math.random() * maxY);
 
-        element.style.left = randomX + 'px';
-        element.style.top = randomY + 'px';
+        movingObject.style.left = randomX + 'px';
+        movingObject.style.top = randomY + 'px';
     }
 
-    // Movimento continuo per tutti gli oggetti
-    setInterval(() => {
-        moveObject(movingObject);
-        losingObjects.forEach(obj => moveObject(obj));
-    }, 1000);
+    // Movimento continuo
+    setInterval(moveObject, 1000);
+
+    // Funzione per mostrare immagine random
+    function showRandomImage() {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        randomImage.src = images[randomIndex];
+        randomImage.style.display = 'block';
+    }
 
     // Mostra il messaggio di vittoria
     function showWinMessage() {
+        showRandomImage();
         winMessage.style.display = 'block';
-        setTimeout(() => winMessage.style.display = 'none', 3000);
+        setTimeout(function() {
+            randomImage.style.display = 'none';
+            winMessage.style.display = 'none';
+        }, 4000);
     }
 
-    // Mostra il messaggio di sconfitta
-    function showLoseMessage() {
-        loseMessage.style.display = 'block';
-        setTimeout(() => loseMessage.style.display = 'none', 3000);
-    }
-
-    // Evento click per la paperella (vittoria)
-    movingObject.addEventListener('click', showWinMessage);
-
-    // Evento click per gli oggetti "perdenti"
-    losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
+    // Evento click
+    movingObject.addEventListener('click', function () {
+        showWinMessage();
+    });
 </script>
 
 </body>
