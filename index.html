@@ -67,23 +67,19 @@
     <button id="start-game">Inizia</button>
 </div>
 
-<!-- Include Howler.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+<!-- Audio di sottofondo -->
+<audio id="background-music" src="papera/sound/videoplayback.m4a" loop></audio>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const startGameButton = document.getElementById('start-game');
+        const backgroundMusic = document.getElementById('background-music');
 
         // Configura la musica di sottofondo
-        const backgroundMusic = new Howl({
-            src: ['papera/sound/videoplayback.mp3'], // Percorso del file audio
-            loop: true,
-            volume: 0.05, // Volume al 5%
-        });
+        backgroundMusic.volume = 0.05;
 
-        // Gestisci il click sul pulsante per avviare l'audio e cambiare pagina
+        // Riproduci la musica dopo il clic sul pulsante
         startGameButton.addEventListener('click', () => {
-            // Riproduci la musica
             backgroundMusic.play().catch(err => {
                 console.error('Errore durante la riproduzione della musica:', err);
             });
@@ -94,13 +90,9 @@
             }, 500);
         });
 
-        // Controlla errori nel caricamento dell'audio
-        backgroundMusic.on('loaderror', (id, error) => {
-            console.error('Errore durante il caricamento dell\'audio:', error);
-        });
-
-        backgroundMusic.on('playerror', () => {
-            console.error('Errore durante la riproduzione dell\'audio.');
+        // Gestione errori audio
+        backgroundMusic.addEventListener('error', () => {
+            console.error('Errore durante il caricamento del file audio.');
         });
     });
 </script>
