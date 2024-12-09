@@ -114,7 +114,7 @@
 
 <div id="title-container">
     <h1>Paperella Game</h1>
-    <p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
+    <p>Clicca per iniziare la musica e giocare!</p>
 </div>
 
 <div id="play-area">
@@ -129,7 +129,7 @@
 </div>
 
 <!-- Aggiunta audio -->
-<audio id="background-music" src="/paprella/papera/sound/background-music.mp3" loop autoplay></audio>
+<audio id="background-music" src="/paprella/papera/sound/background-music.mp3" loop></audio>
 <audio id="win-sound" src="/paprella/papera/sound/win-sound.mp3"></audio>
 <audio id="lose-sound" src="/paprella/papera/sound/lose-sound.mp3"></audio>
 
@@ -143,13 +143,13 @@
     const losingObjects = document.querySelectorAll('.losing-object');
     const backgroundMusic = document.getElementById('background-music');
 
-    // Configura la musica di sottofondo
-    document.addEventListener('DOMContentLoaded', () => {
-        backgroundMusic.volume = 0.05;
+    document.body.addEventListener('click', () => {
+        // Avvia la musica di sottofondo dopo il clic
         backgroundMusic.play().catch(err => {
             console.error('Errore durante la riproduzione della musica:', err);
         });
-    });
+        backgroundMusic.volume = 0.05;
+    }, { once: true });
 
     function moveObject(element) {
         const playAreaWidth = playArea.offsetWidth;
