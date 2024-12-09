@@ -67,29 +67,34 @@ button:hover {
     <button onclick="startGame()">Inizia</button>
 </div>
 
-<!-- Audio -->
-<audio id="background-music" src="papera/sound/videoplayback.mp3" loop></audio>
-
 <script>
+let audioContext, audioElement, track;
+
 document.addEventListener('DOMContentLoaded', () => {
-    const backgroundMusic = document.getElementById('background-music');
+    // Inizializza la Web Audio API
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioElement = new Audio('papera/sound/videoplayback.mp3');
+    track = audioContext.createMediaElementSource(audioElement);
+
+    // Connetti la traccia all'output audio
+    track.connect(audioContext.destination);
 
     // Imposta il volume
-    backgroundMusic.volume = 0.05;
+    audioElement.volume = 0.05;
 
-    // Riproduci solo dopo l'interazione
+    // Riproduci l'audio quando l'utente interagisce con la pagina
     document.body.addEventListener('click', () => {
-        backgroundMusic.play().catch(error => {
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        audioElement.play().catch((error) => {
             console.error('Errore durante la riproduzione dell\'audio:', error);
         });
-    });
-
-    backgroundMusic.addEventListener('error', () => {
-        console.error('Errore durante il caricamento del file audio.');
     });
 });
 
 function startGame() {
+    // Reindirizza alla pagina del gioco con il percorso completo
     window.location.href = "/paprella/papera/provat.html";
 }
 </script>
