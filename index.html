@@ -74,33 +74,43 @@
     document.addEventListener('DOMContentLoaded', () => {
         const startGameButton = document.getElementById('start-game');
 
-        // Configura la musica di sottofondo
-        const backgroundMusic = new Howl({
-            src: ['papera/sound/videoplayback.mp3'], // Percorso del file audio
-            loop: true,
-            volume: 0.05, // Volume al 5%
-        });
-
-        // Gestisci il click sul pulsante per avviare l'audio e cambiare pagina
-        startGameButton.addEventListener('click', () => {
-            // Riproduci la musica
-            backgroundMusic.play().catch(err => {
-                console.error('Errore durante la riproduzione della musica:', err);
+        // Controlla se la musica è già stata avviata in una sessione precedente
+        if (!localStorage.getItem('backgroundMusicPlaying')) {
+            const backgroundMusic = new Howl({
+                src: ['papera/sound/videoplayback.mp3'], // Percorso del file audio
+                loop: true,
+                volume: 0.05, // Volume al 5%
+                autoplay: true, // Avvia automaticamente
             });
 
-            // Reindirizza alla pagina del gioco
-            setTimeout(() => {
-                window.location.href = "/paprella/papera/provat.html";
-            }, 500);
-        });
+            // Gestisci errori
+            backgroundMusic.on('loaderror', (id, error) => {
+                console.error('Errore durante il caricamento dell\'audio:', error);
+            });
 
-        // Controlla errori nel caricamento dell'audio
-        backgroundMusic.on('loaderror', (id, error) => {
-            console.error('Errore durante il caricamento dell\'audio:', error);
-        });
+            backgroundMusic.on('playerror', () => {
+                console.error('Errore durante la riproduzione dell\'audio.');
+                backgroundMusic.once('unlock', () => {
+                    backgroundMusic.play();
+                });
+            });
 
-        backgroundMusic.on('playerror', () => {
-            console.error('Errore durante la riproduzione dell\'audio.');
+            // Salva lo stato nel localStorage
+            localStorage.setItem('backgroundMusicPlaying', 'true');
+
+            // Rendi la musica accessibile nella pagina di gioco
+            window.addEventListener('beforeunload', () => {
+                localStorage.setItem('backgroundMusicInstance', JSON.stringify({
+                    src: 'papera/sound/videoplayback.mp3',
+                    volume: 0.05,
+                    loop: true
+                }));
+            });
+        }
+
+        // Gestisci il click sul pulsante
+        startGameButton.addEventListener('click', () => {
+            window.location.href = "/paprella/papera/provat.html";
         });
     });
 </script>
