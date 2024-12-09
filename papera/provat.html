@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('papera/nuvola.jpg');
+            background-image: url('/paprella/papera/nuvola.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -63,11 +63,11 @@
         }
 
         #moving-object {
-            background-image: url('papera/papera.jfif');
+            background-image: url('/paprella/papera/papera.jfif');
         }
 
         .losing-object {
-            background-image: url('papera/muffa.jpg');
+            background-image: url('/paprella/papera/muffa.jpg');
             background-size: cover;
         }
 
@@ -123,15 +123,15 @@
     <div class="losing-object"></div>
     <div class="losing-object"></div>
     <img id="random-image" src="" alt="Immagine random" />
-    <img id="lose-image" src="papera/perso/Hai perso.jpeg" alt="Hai perso!" />
+    <img id="lose-image" src="/paprella/papera/perso/Hai%20perso.jpeg" alt="Hai perso!" />
     <div id="win-message">Hai vinto!</div>
     <div id="lose-message">Hai perso!</div>
 </div>
 
 <!-- Aggiunta audio -->
-<audio id="background-music" src="papera/sound/background-music.mp3" loop></audio>
-<audio id="win-sound" src="papera/sound/win-sound.mp3"></audio>
-<audio id="lose-sound" src="papera/sound/lose-sound.mp3"></audio>
+<audio id="background-music" src="/paprella/papera/sound/background-music.mp3" loop></audio>
+<audio id="win-sound" src="/paprella/papera/sound/win-sound.mp3"></audio>
+<audio id="lose-sound" src="/paprella/papera/sound/lose-sound.mp3"></audio>
 
 <script>
     const movingObject = document.getElementById('moving-object');
@@ -149,18 +149,18 @@
 
     // Immagini random
     const images = [
-        'papera/random/1.jpeg',
-        'papera/random/2.jpeg',
-        'papera/random/3.jpeg',
-        'papera/random/4.jpeg',
-        'papera/random/5.jpeg',
-        'papera/random/6.jpeg',
-        'papera/random/7.jpeg',
-        'papera/random/8.jpeg',
-        'papera/random/9.jpeg',
-        'papera/random/10.jpeg',
-        'papera/random/11.jpeg',
-        'papera/random/12.jpeg'
+        '/paprella/papera/random/1.jpeg',
+        '/paprella/papera/random/2.jpeg',
+        '/paprella/papera/random/3.jpeg',
+        '/paprella/papera/random/4.jpeg',
+        '/paprella/papera/random/5.jpeg',
+        '/paprella/papera/random/6.jpeg',
+        '/paprella/papera/random/7.jpeg',
+        '/paprella/papera/random/8.jpeg',
+        '/paprella/papera/random/9.jpeg',
+        '/paprella/papera/random/10.jpeg',
+        '/paprella/papera/random/11.jpeg',
+        '/paprella/papera/random/12.jpeg'
     ];
 
     function moveObject(element) {
