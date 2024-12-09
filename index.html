@@ -67,10 +67,9 @@ button:hover {
     <button id="start-game">Inizia</button>
 </div>
 
-<!-- Audio con fallback -->
+<!-- Audio -->
 <audio id="background-music" loop>
     <source src="papera/sound/videoplayback.mp3" type="audio/mpeg">
-    <source src="papera/sound/videoplayback.ogg" type="audio/ogg">
     Il tuo browser non supporta l'elemento audio.
 </audio>
 
@@ -82,17 +81,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Imposta il volume al 5%
     backgroundMusic.volume = 0.05;
 
-    // Riproduci l'audio solo dopo un clic sull'utente
+    // Gestione dell'interazione utente
     startGameButton.addEventListener('click', () => {
-        backgroundMusic.play().catch(error => {
+        // Riproduzione audio
+        backgroundMusic.play().then(() => {
+            console.log('Audio avviato correttamente.');
+        }).catch((error) => {
             console.error('Errore durante la riproduzione dell\'audio:', error);
         });
 
         // Reindirizza alla pagina del gioco
-        window.location.href = "/paprella/papera/provat.html";
+        setTimeout(() => {
+            window.location.href = "/paprella/papera/provat.html";
+        }, 500);
     });
 
-    // Gestione errore audio
+    // Gestione errori durante il caricamento audio
     backgroundMusic.addEventListener('error', () => {
         console.error('Errore durante il caricamento del file audio.');
     });
