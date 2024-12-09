@@ -77,7 +77,7 @@
         // Controlla se la musica è già stata avviata in una sessione precedente
         if (!localStorage.getItem('backgroundMusicPlaying')) {
             const backgroundMusic = new Howl({
-                src: ['papera/sound/videoplayback.mp3'], // Percorso del file audio
+                src: ['papera/sound/videoplayback.m4a'], // Percorso del file audio aggiornato
                 loop: true,
                 volume: 0.05, // Volume al 5%
                 autoplay: true, // Avvia automaticamente
@@ -101,7 +101,7 @@
             // Rendi la musica accessibile nella pagina di gioco
             window.addEventListener('beforeunload', () => {
                 localStorage.setItem('backgroundMusicInstance', JSON.stringify({
-                    src: 'papera/sound/videoplayback.mp3',
+                    src: 'papera/sound/videoplayback.m4a',
                     volume: 0.05,
                     loop: true
                 }));
