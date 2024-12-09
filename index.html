@@ -67,36 +67,39 @@ button:hover {
     <button onclick="startGame()">Inizia</button>
 </div>
 
+<!-- Audio con fallback -->
+<audio id="background-music" autoplay loop>
+    <source src="papera/sound/videoplayback.mp3" type="audio/mpeg">
+    <source src="papera/sound/videoplayback.ogg" type="audio/ogg">
+    <source src="papera/sound/videoplayback.wav" type="audio/wav">
+    Il tuo browser non supporta l'elemento audio.
+</audio>
+
 <script>
-let audioContext, audioElement, track;
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Inizializza la Web Audio API
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    audioElement = new Audio('papera/sound/videoplayback.mp3');
-    track = audioContext.createMediaElementSource(audioElement);
-
-    // Connetti la traccia all'output audio
-    track.connect(audioContext.destination);
-
-    // Imposta il volume
-    audioElement.volume = 0.05;
-
-    // Riproduci l'audio quando l'utente interagisce con la pagina
-    document.body.addEventListener('click', () => {
-        if (audioContext.state === 'suspended') {
-            audioContext.resume();
-        }
-        audioElement.play().catch((error) => {
-            console.error('Errore durante la riproduzione dell\'audio:', error);
-        });
-    });
-});
-
 function startGame() {
-    // Reindirizza alla pagina del gioco con il percorso completo
+    // Reindirizza alla pagina del gioco
     window.location.href = "/paprella/papera/provat.html";
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundMusic = document.getElementById('background-music');
+
+    // Verifica il supporto per il formato audio
+    if (backgroundMusic.canPlayType('audio/mpeg') || backgroundMusic.canPlayType('audio/ogg') || backgroundMusic.canPlayType('audio/wav')) {
+        console.log("Formato audio supportato.");
+        backgroundMusic.volume = 0.05; // Imposta il volume al 5%
+        backgroundMusic.play().catch(error => {
+            console.error('Errore durante la riproduzione dell\'audio:', error);
+        });
+    } else {
+        console.error("Nessun formato audio supportato dal browser.");
+    }
+
+    // Gestione errore audio
+    backgroundMusic.addEventListener('error', () => {
+        console.error('Errore durante il caricamento del file audio.');
+    });
+});
 </script>
 
 </body>
