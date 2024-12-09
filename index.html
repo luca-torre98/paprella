@@ -1,113 +1,109 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paperella Game - Schermata Iniziale</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperella Game - Schermata Iniziale</title>
 
-<style>
-body {
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('papera/nuvola.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    font-family: 'Fredoka', sans-serif;
-    flex-direction: column;
-}
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('papera/nuvola.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: 'Fredoka', sans-serif;
+            flex-direction: column;
+        }
 
-#menu-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+        #menu-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 
-h1 {
-    font-size: 52px;
-    color: #0044cc;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-}
+        h1 {
+            font-size: 52px;
+            color: #0044cc;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
 
-p {
-    font-size: 20px;
-    color: #0066ff;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
-}
+        p {
+            font-size: 20px;
+            color: #0066ff;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
 
-button {
-    font-size: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #FFD700;
-    color: #004080;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFD700;
+            color: #004080;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-button:hover {
-    background-color: #FFC107;
-}
-</style>
+        button:hover {
+            background-color: #FFC107;
+        }
+    </style>
 </head>
 <body>
 
 <div id="menu-container">
     <h1>Paperella Game</h1>
-    <p>Clicca il pulsante per avviare la musica e iniziare il gioco!</p>
+    <p>Clicca il pulsante per iniziare il gioco!</p>
     <button id="start-game">Inizia</button>
 </div>
 
-<!-- Audio -->
-<audio id="background-music" loop>
-    <source src="papera/sound/videoplayback.mp3" type="audio/mpeg">
-    Il tuo browser non supporta l'elemento audio.
-</audio>
+<!-- Include Howler.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const startGameButton = document.getElementById('start-game');
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    let audioBuffer;
+    document.addEventListener('DOMContentLoaded', () => {
+        const startGameButton = document.getElementById('start-game');
 
-    // Carica l'audio tramite fetch
-    fetch('papera/sound/videoplayback.mp3')
-        .then(response => response.arrayBuffer())
-        .then(data => audioContext.decodeAudioData(data))
-        .then(buffer => {
-            audioBuffer = buffer;
-            console.log('Audio caricato e pronto per la riproduzione.');
-        })
-        .catch(error => {
+        // Configura la musica di sottofondo
+        const backgroundMusic = new Howl({
+            src: ['papera/sound/videoplayback.mp3'], // Percorso del file audio
+            loop: true,
+            volume: 0.05, // Volume al 5%
+            autoplay: true, // Avvia automaticamente
+        });
+
+        // Gestisci il click sul pulsante
+        startGameButton.addEventListener('click', () => {
+            backgroundMusic.play();
+
+            // Reindirizza alla pagina del gioco
+            setTimeout(() => {
+                window.location.href = "/paprella/papera/provat.html";
+            }, 500);
+        });
+
+        // Controlla errori nel caricamento dell'audio
+        backgroundMusic.on('loaderror', (id, error) => {
             console.error('Errore durante il caricamento dell\'audio:', error);
         });
 
-    startGameButton.addEventListener('click', () => {
-        if (audioBuffer) {
-            const source = audioContext.createBufferSource();
-            source.buffer = audioBuffer;
-            source.connect(audioContext.destination);
-            source.loop = true; // Ripeti in loop
-            source.start(0); // Avvia l'audio
-        } else {
-            console.error('Audio non caricato correttamente.');
-        }
-
-        // Reindirizza alla pagina del gioco
-        setTimeout(() => {
-            window.location.href = "/paprella/papera/provat.html";
-        }, 500);
+        backgroundMusic.on('playerror', () => {
+            console.error('Errore durante la riproduzione dell\'audio.');
+            backgroundMusic.once('unlock', () => {
+                backgroundMusic.play();
+            });
+        });
     });
-});
 </script>
 
 </body>
