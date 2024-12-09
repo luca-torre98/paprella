@@ -6,7 +6,7 @@
     <title>Audio Player</title>
 </head>
 <body>
-    <!-- Player audio nascosto -->
+    <!-- Audio player invisibile -->
     <audio id="background-music" src="/paprella/papera/sound/videoplayback.m4a" autoplay loop></audio>
 
     <script>
@@ -14,9 +14,11 @@
             const backgroundMusic = document.getElementById('background-music');
             backgroundMusic.volume = 0.05;
 
-            // Gestione errori audio
-            backgroundMusic.addEventListener('error', () => {
-                console.error('Errore durante il caricamento della musica di sottofondo.');
+            // Assicurati che l'audio continui anche dopo gli errori di riproduzione
+            backgroundMusic.addEventListener('playerror', () => {
+                backgroundMusic.once('unlock', () => {
+                    backgroundMusic.play();
+                });
             });
         });
     </script>
