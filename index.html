@@ -68,7 +68,9 @@ button:hover {
 </div>
 
 <!-- Musica di sottofondo -->
-<audio id="background-music" src="papera/sound/background-music.mp3" loop autoplay></audio>
+<!-- Audio -->
+<audio id="background-music" src="papera/sound/videoplayback.m4a" loop autoplay></audio>
+
 
 <script>
 function startGame() {
@@ -76,10 +78,16 @@ function startGame() {
     window.location.href = "/paprella/papera/provat.html"; // Usa il nome del repository
 }
 
-// Avvio automatico della musica
 document.addEventListener('DOMContentLoaded', () => {
     const backgroundMusic = document.getElementById('background-music');
-    backgroundMusic.volume = 0.05; // Imposta il volume al 5%
+    
+    // Imposta il volume al 5%
+    backgroundMusic.volume = 0.05;
+
+    // Gestione errore audio
+    backgroundMusic.addEventListener('error', () => {
+        console.error('Errore durante il caricamento del file audio.');
+    });
 });
 </script>
 
