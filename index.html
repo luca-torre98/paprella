@@ -57,6 +57,11 @@
         button:hover {
             background-color: #FFC107;
         }
+
+        /* Iframe invisibile */
+        #audio-frame {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -67,31 +72,16 @@
     <button id="start-game">Inizia</button>
 </div>
 
-<audio id="background-music" src="papera/sound/videoplayback.m4a" loop autoplay></audio>
+<!-- Iframe invisibile per mantenere l'audio -->
+<iframe id="audio-frame" src="/paprella/papera/audio-player.html"></iframe>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const startGameButton = document.getElementById('start-game');
-        const backgroundMusic = document.getElementById('background-music');
 
-        // Imposta il volume e avvia la musica
-        backgroundMusic.volume = 0.05;
-
-        // Gestisci errori di riproduzione
-        backgroundMusic.addEventListener('error', () => {
-            console.error('Errore durante il caricamento o la riproduzione dell\'audio.');
-        });
-
-        // Riproduci musica solo dopo un'interazione dell'utente
+        // Gestisci il click sul pulsante
         startGameButton.addEventListener('click', () => {
-            backgroundMusic.play().catch((err) => {
-                console.error('Errore durante la riproduzione della musica:', err);
-            });
-
-            // Reindirizza alla pagina del gioco
-            setTimeout(() => {
-                window.location.href = "/paprella/papera/provat.html";
-            }, 500);
+            window.location.href = "/paprella/papera/provat.html";
         });
     });
 </script>
