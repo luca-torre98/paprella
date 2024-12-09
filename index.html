@@ -67,11 +67,20 @@ button:hover {
     <button onclick="startGame()">Inizia</button>
 </div>
 
+<!-- Musica di sottofondo -->
+<audio id="background-music" src="papera/sound/background-music.mp3" loop autoplay></audio>
+
 <script>
 function startGame() {
     // Reindirizza alla pagina del gioco con il percorso completo
     window.location.href = "/paprella/papera/provat.html"; // Usa il nome del repository
 }
+
+// Avvio automatico della musica
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundMusic = document.getElementById('background-music');
+    backgroundMusic.volume = 0.05; // Imposta il volume al 5%
+});
 </script>
 
 </body>
