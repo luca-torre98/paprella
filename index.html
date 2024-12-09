@@ -64,35 +64,33 @@ button:hover {
 <div id="menu-container">
     <h1>Paperella Game</h1>
     <p>Clicca il pulsante per avviare la musica e iniziare il gioco!</p>
-    <button onclick="startGame()">Inizia</button>
+    <button id="start-game">Inizia</button>
 </div>
 
 <!-- Audio con fallback -->
 <audio id="background-music" loop>
     <source src="papera/sound/videoplayback.mp3" type="audio/mpeg">
     <source src="papera/sound/videoplayback.ogg" type="audio/ogg">
-    <source src="papera/sound/videoplayback.wav" type="audio/wav">
     Il tuo browser non supporta l'elemento audio.
 </audio>
 
 <script>
-function startGame() {
-    // Reindirizza alla pagina del gioco
-    window.location.href = "/paprella/papera/provat.html";
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     const backgroundMusic = document.getElementById('background-music');
+    const startGameButton = document.getElementById('start-game');
 
     // Imposta il volume al 5%
     backgroundMusic.volume = 0.05;
 
-    // Riproduci l'audio solo dopo un'interazione
-    document.body.addEventListener('click', () => {
+    // Riproduci l'audio solo dopo un clic sull'utente
+    startGameButton.addEventListener('click', () => {
         backgroundMusic.play().catch(error => {
             console.error('Errore durante la riproduzione dell\'audio:', error);
         });
-    }, { once: true });
+
+        // Reindirizza alla pagina del gioco
+        window.location.href = "/paprella/papera/provat.html";
+    });
 
     // Gestione errore audio
     backgroundMusic.addEventListener('error', () => {
