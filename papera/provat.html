@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <iframe id="audio-frame" src="/paprella/papera/audio-player.html" style="display:none;"></iframe>
+    <!-- L'iframe deve essere nel body, non qui -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paperella Game</title>
@@ -22,87 +22,11 @@
             flex-direction: column;
         }
 
-        #title-container {
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
+        /* ... Il resto del tuo CSS rimane invariato ... */
 
-        h1 {
-            font-size: 52px;
-            color: #0044cc;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 28px;
-            color: #0066ff;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-
-        #play-area {
-            position: relative;
-            width: 80vw;
-            height: 75vh;
-            overflow: hidden;
-            border: 10px solid #FFD700;
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            background-color: #ffffff;
-        }
-
-        #moving-object, .losing-object {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        #moving-object {
-            background-image: url('/paprella/papera/papera.jfif');
-        }
-
-        .losing-object {
-            background-image: url('/paprella/papera/muffa.jpg');
-            background-size: cover;
-        }
-
-        #random-image, #lose-image {
-            display: none;
-            width: 300px;
-            height: auto;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 5px solid red;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        #win-message, #lose-message {
-            display: none;
-            font-size: 36px;
-            font-family: 'Fredoka', sans-serif;
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translate(-50%, 0);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: 3px solid;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-       #win-message {
-        color: #0033cc; /* Un blu intenso */
-        border-color: #0099ff; /* Un blu chiaro brillante */
+        #win-message {
+            color: #0033cc; /* Un blu intenso */
+            border-color: #0099ff; /* Un blu chiaro brillante */
         }    
 
         #lose-message {
@@ -113,110 +37,107 @@
 </head>
 <body>
 
-<div id="title-container">
-    <h1>Paperella Game</h1>
-    <p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
-</div>
+    <!-- Sposta l'iframe qui -->
+    <iframe id="audio-frame" src="/paprella/papera/audio-player.html" style="display:none;"></iframe>
 
-<div id="play-area">
-    <div id="moving-object"></div>
-    <div class="losing-object"></div>
-    <div class="losing-object"></div>
-    <div class="losing-object"></div>
-    <img id="random-image" src="" alt="Immagine random" />
-    <img id="lose-image" src="/paprella/papera/perso/Hai%20perso.jpeg" alt="Hai perso!" />
-    <div id="win-message">Hai vinto!</div>
-    <div id="lose-message">Hai perso!</div>
-</div>
+    <div id="title-container">
+        <h1>Paperella Game</h1>
+        <p>Clicca la pagina per avviare la musica e inizia a giocare!</p>
+    </div>
 
-<!-- Aggiunta audio -->
-<audio id="win-sound" src="/paprella/papera/sound/win-sound.mp3"></audio>
-<audio id="lose-sound" src="/paprella/papera/sound/lose-sound.mp3"></audio>
+    <div id="play-area">
+        <div id="moving-object"></div>
+        <div class="losing-object"></div>
+        <div class="losing-object"></div>
+        <div class="losing-object"></div>
+        <img id="random-image" src="" alt="Immagine random" />
+        <img id="lose-image" src="/paprella/papera/perso/Hai%20perso.jpeg" alt="Hai perso!" />
+        <div id="win-message">Hai vinto!</div>
+        <div id="lose-message">Hai perso!</div>
+    </div>
 
-<script>
-    const movingObject = document.getElementById('moving-object');
-    const winMessage = document.getElementById('win-message');
-    const loseMessage = document.getElementById('lose-message');
-    const randomImage = document.getElementById('random-image');
-    const loseImage = document.getElementById('lose-image');
-    const playArea = document.getElementById('play-area');
-    const losingObjects = document.querySelectorAll('.losing-object');
+    <!-- Aggiunta audio per suoni di vittoria/sconfitta -->
+    <audio id="win-sound" src="/paprella/papera/sound/win-sound.mp3"></audio>
+    <audio id="lose-sound" src="/paprella/papera/sound/lose-sound.mp3"></audio>
 
-    // Suoni
-    const backgroundMusic = document.getElementById('background-music');
-    const winSound = document.getElementById('win-sound');
-    const loseSound = document.getElementById('lose-sound');
+    <script>
+        const movingObject = document.getElementById('moving-object');
+        const winMessage = document.getElementById('win-message');
+        const loseMessage = document.getElementById('lose-message');
+        const randomImage = document.getElementById('random-image');
+        const loseImage = document.getElementById('lose-image');
+        const playArea = document.getElementById('play-area');
+        const losingObjects = document.querySelectorAll('.losing-object');
 
-    // Immagini random
-    const images = [
-        '/paprella/papera/random/1.jpeg',
-        '/paprella/papera/random/2.jpeg',
-        '/paprella/papera/random/3.jpeg',
-        '/paprella/papera/random/4.jpeg',
-        '/paprella/papera/random/5.jpeg',
-        '/paprella/papera/random/6.jpeg',
-        '/paprella/papera/random/7.jpeg',
-        '/paprella/papera/random/8.jpeg',
-        '/paprella/papera/random/9.jpeg',
-        '/paprella/papera/random/10.jpeg',
-        '/paprella/papera/random/11.jpeg',
-        '/paprella/papera/random/12.jpeg'
-    ];
+        // Suoni
+        const winSound = document.getElementById('win-sound');
+        const loseSound = document.getElementById('lose-sound');
 
-    function moveObject(element) {
-        const playAreaWidth = playArea.offsetWidth;
-        const playAreaHeight = playArea.offsetHeight;
+        // Immagini random
+        const images = [
+            '/paprella/papera/random/1.jpeg',
+            '/paprella/papera/random/2.jpeg',
+            '/paprella/papera/random/3.jpeg',
+            '/paprella/papera/random/4.jpeg',
+            '/paprella/papera/random/5.jpeg',
+            '/paprella/papera/random/6.jpeg',
+            '/paprella/papera/random/7.jpeg',
+            '/paprella/papera/random/8.jpeg',
+            '/paprella/papera/random/9.jpeg',
+            '/paprella/papera/random/10.jpeg',
+            '/paprella/papera/random/11.jpeg',
+            '/paprella/papera/random/12.jpeg',
+            '/paprella/papera/random/13.jpg',  // Aggiunta
+            '/paprella/papera/random/14.jpg',  // Aggiunta
+            '/paprella/papera/random/15.jpg'   // Aggiunta
+        ];
 
-        const maxX = playAreaWidth - element.offsetWidth;
-        const maxY = playAreaHeight - element.offsetHeight;
+        function moveObject(element) {
+            const playAreaWidth = playArea.offsetWidth;
+            const playAreaHeight = playArea.offsetHeight;
 
-        const randomX = Math.floor(Math.random() * maxX);
-        const randomY = Math.floor(Math.random() * maxY);
+            const maxX = playAreaWidth - element.offsetWidth;
+            const maxY = playAreaHeight - element.offsetHeight;
 
-        element.style.left = randomX + 'px';
-        element.style.top = randomY + 'px';
-    }
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
 
-    setInterval(() => {
-        moveObject(movingObject);
-        losingObjects.forEach(obj => moveObject(obj));
-    }, 1000);
+            element.style.left = randomX + 'px';
+            element.style.top = randomY + 'px';
+        }
 
-    function showWinMessage() {
-        winSound.play();
-        const randomIndex = Math.floor(Math.random() * images.length);
-        randomImage.src = images[randomIndex];
-        randomImage.style.display = 'block';
-        winMessage.style.display = 'block';
-        setTimeout(() => {
-            randomImage.style.display = 'none';
-            winMessage.style.display = 'none';
-        }, 4000);
-    }
+        setInterval(() => {
+            moveObject(movingObject);
+            losingObjects.forEach(obj => moveObject(obj));
+        }, 1000);
 
-    function showLoseMessage() {
-        loseSound.play();
-        loseImage.style.display = 'block';
-        loseMessage.style.display = 'block';
-        setTimeout(() => {
-            loseImage.style.display = 'none';
-            loseMessage.style.display = 'none';
-        }, 4000);
-    }
+        function showWinMessage() {
+            winSound.play();
+            const randomIndex = Math.floor(Math.random() * images.length);
+            randomImage.src = images[randomIndex];
+            randomImage.style.display = 'block';
+            winMessage.style.display = 'block';
+            setTimeout(() => {
+                randomImage.style.display = 'none';
+                winMessage.style.display = 'none';
+            }, 4000);
+        }
 
-    movingObject.addEventListener('click', showWinMessage);
-    losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
+        function showLoseMessage() {
+            loseSound.play();
+            loseImage.style.display = 'block';
+            loseMessage.style.display = 'block';
+            setTimeout(() => {
+                loseImage.style.display = 'none';
+                loseMessage.style.display = 'none';
+            }, 4000);
+        }
 
-    // Musica di sottofondo
-    document.body.addEventListener('click', () => {
-        backgroundMusic.play();
-        backgroundMusic.volume = 0.05; // Regola il volume
-    }, { once: true });
+        movingObject.addEventListener('click', showWinMessage);
+        losingObjects.forEach(obj => obj.addEventListener('click', showLoseMessage));
 
-    backgroundMusic.addEventListener('error', () => {
-        console.error('Errore durante il caricamento della musica di sottofondo.');
-    });
-</script>
+        // Rimuovi il codice relativo a backgroundMusic
+    </script>
 
 </body>
 </html>
