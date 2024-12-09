@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paperella Game - Schermata Iniziale</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paperella Game - Schermata Iniziale</title>
 
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('papera/nuvola.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            font-family: 'Fredoka', sans-serif;
-            flex-direction: column;
-        }
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('papera/nuvola.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Fredoka', sans-serif;
+    flex-direction: column;
+}
 
-        #menu-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
+#menu-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
-        h1 {
-            font-size: 52px;
-            color: #0044cc;
-            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
+h1 {
+    font-size: 52px;
+    color: #0044cc;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
 
-        p {
-            font-size: 20px;
-            color: #0066ff;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-        }
+p {
+    font-size: 20px;
+    color: #0066ff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
 
-        button {
-            font-size: 20px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #FFD700;
-            color: #004080;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFD700;
+    color: #004080;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        button:hover {
-            background-color: #FFC107;
-        }
-    </style>
+button:hover {
+    background-color: #FFC107;
+}
+</style>
 </head>
 <body>
 
@@ -67,32 +67,31 @@
     <button onclick="startGame()">Inizia</button>
 </div>
 
-<!-- Audio per la musica di sottofondo -->
-<audio id="background-music" src="papera/sound/videoplayback.mp3" loop autoplay></audio>
+<!-- Audio -->
+<audio id="background-music" src="papera/sound/videoplayback.mp3" loop></audio>
 
 <script>
-    function startGame() {
-        // Reindirizza alla pagina del gioco con il percorso completo
-        window.location.href = "/paprella/papera/provat.html"; // Usa il nome del repository
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    const backgroundMusic = document.getElementById('background-music');
 
-    // Avvio della musica di sottofondo
-    document.addEventListener('DOMContentLoaded', () => {
-        const backgroundMusic = document.getElementById('background-music');
-        
-        // Imposta il volume al 5%
-        backgroundMusic.volume = 0.05;
+    // Imposta il volume
+    backgroundMusic.volume = 0.05;
 
-        // Forza la riproduzione automatica (simile a provat.html)
+    // Riproduci solo dopo l'interazione
+    document.body.addEventListener('click', () => {
         backgroundMusic.play().catch(error => {
-            console.error('Errore durante la riproduzione automatica:', error);
-        });
-
-        // Gestione errori di caricamento del file audio
-        backgroundMusic.addEventListener('error', () => {
-            console.error('Errore durante il caricamento del file audio.');
+            console.error('Errore durante la riproduzione dell\'audio:', error);
         });
     });
+
+    backgroundMusic.addEventListener('error', () => {
+        console.error('Errore durante il caricamento del file audio.');
+    });
+});
+
+function startGame() {
+    window.location.href = "/paprella/papera/provat.html";
+}
 </script>
 
 </body>
