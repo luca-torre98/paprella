@@ -63,12 +63,12 @@ button:hover {
 
 <div id="menu-container">
     <h1>Paperella Game</h1>
-    <p>Clicca il pulsante per iniziare il gioco!</p>
+    <p>Clicca il pulsante per avviare la musica e iniziare il gioco!</p>
     <button onclick="startGame()">Inizia</button>
 </div>
 
 <!-- Audio con fallback -->
-<audio id="background-music" autoplay loop>
+<audio id="background-music" loop>
     <source src="papera/sound/videoplayback.mp3" type="audio/mpeg">
     <source src="papera/sound/videoplayback.ogg" type="audio/ogg">
     <source src="papera/sound/videoplayback.wav" type="audio/wav">
@@ -84,16 +84,15 @@ function startGame() {
 document.addEventListener('DOMContentLoaded', () => {
     const backgroundMusic = document.getElementById('background-music');
 
-    // Verifica il supporto per il formato audio
-    if (backgroundMusic.canPlayType('audio/mpeg') || backgroundMusic.canPlayType('audio/ogg') || backgroundMusic.canPlayType('audio/wav')) {
-        console.log("Formato audio supportato.");
-        backgroundMusic.volume = 0.05; // Imposta il volume al 5%
+    // Imposta il volume al 5%
+    backgroundMusic.volume = 0.05;
+
+    // Riproduci l'audio solo dopo un'interazione
+    document.body.addEventListener('click', () => {
         backgroundMusic.play().catch(error => {
             console.error('Errore durante la riproduzione dell\'audio:', error);
         });
-    } else {
-        console.error("Nessun formato audio supportato dal browser.");
-    }
+    }, { once: true });
 
     // Gestione errore audio
     backgroundMusic.addEventListener('error', () => {
